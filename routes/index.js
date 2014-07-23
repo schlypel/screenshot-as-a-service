@@ -18,7 +18,7 @@ module.exports = function(app, useCors) {
     // required options
     var options = {
       uri: 'http://localhost:' + rasterizerService.getPort() + '/',
-      headers: { url: url }
+      headers: { url: url, zoom: 1 }
     };
     ['width', 'height', 'zoom', 'clipRect', 'javascriptEnabled', 'loadImages', 'localToRemoteUrlAccessEnabled', 'userAgent', 'userName', 'password', 'delay'].forEach(function(name) {
       if (req.param(name, false)) options.headers[name] = req.param(name);
