@@ -64,6 +64,7 @@ service = server.listen(port, function(request, response) {
     return;
   }
   var url = request.headers.url;
+  var zoom = request.headers.zoom || 1;
   var path = basePath + (request.headers.filename || (url.replace(new RegExp('https?://'), '').replace(/\//g, '.') + '.png'));
   var page = new WebPage();
   var delay = request.headers.delay || 0;
@@ -89,6 +90,7 @@ service = server.listen(port, function(request, response) {
   page.open(url, function(status) {
     if (status == 'success') {
       window.setTimeout(function () {
+        page.zoomFactor = zoom;
         page.render(path);
         response.write('Success: Screenshot saved to ' + path + "\n");
         page.release();
