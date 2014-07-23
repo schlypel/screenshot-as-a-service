@@ -76,6 +76,7 @@ service = server.listen(port, function(request, response) {
     if (request.headers.clipRect) {
       page.clipRect = JSON.parse(request.headers.clipRect);
     }
+    page.zoomFactor = zoom;
     for (name in pageSettings) {
       if (value = request.headers[pageSettings[name]]) {
         value = (value == 'false') ? false : ((value == 'true') ? true : value);
@@ -90,7 +91,6 @@ service = server.listen(port, function(request, response) {
   page.open(url, function(status) {
     if (status == 'success') {
       window.setTimeout(function () {
-        page.zoomFactor = zoom;
         page.render(path);
         response.write('Success: Screenshot saved to ' + path + "\n");
         page.release();
