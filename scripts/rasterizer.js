@@ -73,10 +73,10 @@ service = server.listen(port, function(request, response) {
       width: request.headers.width || defaultViewportSize.width,
       height: request.headers.height || defaultViewportSize.height
     };
+    page.zoomFactor = zoom;
     if (request.headers.clipRect) {
       page.clipRect = JSON.parse(request.headers.clipRect);
     }
-    page.zoomFactor = zoom;
     for (name in pageSettings) {
       if (value = request.headers[pageSettings[name]]) {
         value = (value == 'false') ? false : ((value == 'true') ? true : value);
