@@ -19,31 +19,37 @@
   <div class="row-fluid">
   <form action="../" method="GET" class="well form-inline">
     <fieldset>
-      
+
     <div class="control-group">
       <div class="controls">
+		<h2>Target</h2>
         <input type="text" name="url" class="span12" required="required" placeholder="Url"/>
         <span class="help-block">with or without the http:// prefix</span>
       </div>
     </div>
-    
+
     <div class="control-group">
       <div class="controls">
+		<h2>Viewport</h2>
         <input type="text" name="width" class="span3" style="display: initial" placeholder="Width"/>
         <input type="text" name="height" class="span3" style="display: initial" placeholder="Height"/>
         <span class="help-inline">in pixels</span>
         <input type="text" name="zoom" class="span3" style="display: initial" placeholder="Zoom"/>
-        <span class="help-inline">as factor(0-1) eg 0.5</span>
+        <span class="help-inline">as factor, eg 0.5</span>
       </div>
     </div>
-    
+
     <div class="control-group">
       <div class="controls">
+		<h2>Image operations</h2>
         <input type="text" name="clipRect" class="span6" placeholder="clipRect (JSON)"/>
         <span class="help-inline">e.g. {"top":14,"left":3,"width":400,"height":300}</span>
+        <br>
+        <input type="text" name="resizeWidth" class="span3" style="display: initial" placeholder="Target width"/>
+        <input type="text" name="resizeHeight" class="span3" style="display: initial" placeholder="Target height"/>
       </div>
     </div>
-    
+
     <div class="control-group">
       <div class="controls">
         <label class="checkbox inline" for="javascriptEnabled">
@@ -53,7 +59,7 @@
           <input type="checkbox" checked="checked" name="loadImages" value="true"/>Load Images
         </label>
         <label class="checkbox inline" for="localToRemoteUrlAccessEnabled">
-          <input type="checkbox" name="localToRemoteUrlAccessEnabled" value="true"/>Enable Local To Remote Url Access
+          <input type="checkbox" name="localToRemoteUrlAccessEnabled" value="true" checked="checked"/>Enable Local To Remote Url Access (CORS)
         </label>
       </div>
     </div>
@@ -86,7 +92,7 @@
     <div class="form-actions">
       <button type="submit" class="btn btn-primary">Submit</button>
     </div>
-    
+
     </fieldset>
   </form>
   </div>

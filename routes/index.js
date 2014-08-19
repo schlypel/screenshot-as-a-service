@@ -3,6 +3,7 @@ var join = require('path').join;
 var fs = require('fs');
 var path = require('path');
 var request = require('request');
+var gm = require('gm');
 
 module.exports = function(app, useCors) {
   var rasterizerService = app.settings.rasterizerService;
@@ -20,7 +21,7 @@ module.exports = function(app, useCors) {
       uri: 'http://localhost:' + rasterizerService.getPort() + '/',
       headers: { url: url, zoom: 1 }
     };
-    ['width', 'height', 'zoom', 'clipRect', 'javascriptEnabled', 'loadImages', 'localToRemoteUrlAccessEnabled', 'userAgent', 'userName', 'password', 'delay'].forEach(function(name) {
+    ['width', 'height', 'zoom', 'clipRect', 'resizeWidth', 'resizeHeight', 'javascriptEnabled', 'loadImages', 'localToRemoteUrlAccessEnabled', 'userAgent', 'userName', 'password', 'delay'].forEach(function(name) {
       if (req.param(name, false)) options.headers[name] = req.param(name);
     });
 
@@ -81,7 +82,28 @@ module.exports = function(app, useCors) {
         rasterizerService.restartService();
         return callback(new Error(body));
       }
-      callback(null);
+      var filePath = join(rasterizerService.getPath(), rasterizerOptions.headers.filename);
+      console.log(rasterizerOptions);
+      if (rasterizerOptions.headers.resizeWidth &&
+		  rasterizerOptions.headers.resizeWidth > 1 &&
+		  rasterizerOptions.headers.resizeHeight &&
+		  rasterizerOptions.headers.resizeHeight > 1){
+		gm(filePath)
+			.resize(rasterizerOptions.headers.resizeWidth,rasterizerOptions.headers.resizeHeight)
+			.write(filePath + '.tmp', function (error) {
+				if (error) {
+					console.log('Error - ', error);
+				}else{
+					fs.writeFileSync(filePath, fs.readFileSync(filePath + '.tmp'));
+					fs.unlink(filePath + '.tmp', function(err){
+					if(err){
+						console.log(err);
+					}
+					callback(null);
+				});
+			}
+		});
+	  }
     });
   }
 
