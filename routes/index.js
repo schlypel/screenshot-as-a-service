@@ -83,7 +83,6 @@ module.exports = function(app, useCors) {
         return callback(new Error(body));
       }
       var filePath = join(rasterizerService.getPath(), rasterizerOptions.headers.filename);
-      console.log(rasterizerOptions);
       if (rasterizerOptions.headers.resizeWidth &&
 		  rasterizerOptions.headers.resizeWidth > 1 &&
 		  rasterizerOptions.headers.resizeHeight &&
